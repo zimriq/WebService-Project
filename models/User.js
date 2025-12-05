@@ -1,14 +1,9 @@
 const mongoose = require('mongoose');
 
-const loadSchema = new mongoose.Schema({
-    userId:{ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    display_identifier: String, 
-    load_status: String, 
-    load_status_label: String,
-    order_number: String,
-    sort: Number,
-    active: Boolean,
-    current: Boolean,
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    passwordHash: { type: String, required: true },
+    full_name: String, 
 });
 
-module.exports = mongoose.model('Load', loadSchema);
+module.exports = mongoose.model('User', userSchema);
