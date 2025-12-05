@@ -1,29 +1,22 @@
-//require('dotenv').config();
+require('dotenv').config();
 const crypto = require('crypto');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
-/*
+
 //database connection
 const mongoose = require('mongoose');
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(process.env.MONGODB_URI); 
         console.log('MongoDB connected');
     } catch (error) {
         console.error('MongoDB connection error:', error);
         process.exit(1);
     }
 };
-module.exports = connectDB;
-
-const connectDB = require('./db'); 
 connectDB();
-*/
 
 app.use(express.json()); 
 
