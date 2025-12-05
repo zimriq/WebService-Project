@@ -110,8 +110,52 @@ app.get('/authenticate/:token', (req, res) => {
 });
 
 //loads 
+//Expose a loads API endpoint that takes in an api_token to authenticate/associate which user
+// and returns loads for that user
 app.get('/loads', (req, res) => {
-
+    try{
+        const authorization = req.headers['authorization'];
+        if(!authorization){
+            return res.status(401).json({error: 'Unauthorized due to missing or invalid token and/or API key'});
+        }
+        
+        const token = authorization.replace('Token token=','');
+        const userId = tokens[token];
+        if(!userId){
+            return res.status(401).json({error: 'Unauthorized due to invalid or expired token and/or API key'});
+        }
+        
+        const user = users.find(u => u.id === userId);
+        if(!user){
+            return res.status(401).json({error: 'Unauthorized due to invalid username or password'});
+        }
+        //id, display_identifier, sort, order_number, load_status, load_status_label, active, current
+        res.json([
+                    {
+                        id: 'load1',
+                        display_identifier: 'LOAD-001',
+                        load_status: 'IN_PROGRESS',
+                        sort: 1,
+                        order_number: 'ORD-1001',
+                        load_status_label: 'In Progress',
+                        active: true,
+                        current: true
+                    },
+                    {
+                        id: 'load2',
+                        display_identifier: 'LOAD-002',
+                        sort: 2,
+                        order_number: 'ORD-1002',
+                        load_status: 'IN_TRANSIT',
+                        load_status_label: 'In Transit',
+                        active: true,
+                        current: false
+                    }
+                ]);
+    }
+    catch(error){
+        res.status(400).json({error: 'Bad Request'});
+    }
 }); 
 
 
