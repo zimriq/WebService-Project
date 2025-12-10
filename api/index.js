@@ -1,14 +1,12 @@
-require('dotenv').config();
-const serverless = require('serverless-http');
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
+console.log('Mongo URI:', process.env.MONGODB_URI);
+
 const crypto = require('crypto');
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 
-
-//database
-const connectDB = require('../config/db');
-
-connectDB();
 const User = require('../models/User');
 const Token = require('../models/Token');
 const Load = require('../models/Load');
@@ -22,6 +20,19 @@ function generateToken() {
 function hashPassword(password){
     return crypto.createHash('sha256').update(password).digest('hex');
 }
+
+console.log('Mongo URI:', process.env.MONGODB_URI);
+
+const connectDB = async () => {
+    try{
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log('MongoDB connected');
+    } catch(err){
+        console.error('MongoDB connection error:', err);
+        process.exit(1);
+    }
+};
+connectDB();
 
 app.get('/', (req, res) => {
     res.send("hello eleos");
@@ -118,4 +129,7 @@ app.get('/loads', async (req, res) => {
 }); 
 
 
-module.exports.handler = serverless(app);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
