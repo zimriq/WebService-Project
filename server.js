@@ -1,15 +1,12 @@
-const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../.env') });
-console.log('Mongo URI:', process.env.MONGODB_URI);
-
+require('dotenv').config();
 const crypto = require('crypto');
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 
-const User = require('../models/User');
-const Token = require('../models/Token');
-const Load = require('../models/Load');
+const User = require('./models/User');
+const Token = require('./models/Token');
+const Load = require('./models/Load');
 
 app.use(express.json()); 
 
