@@ -1,17 +1,17 @@
 require('dotenv').config();
+const serverless = require('serverless-http');
 const crypto = require('crypto');
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
 
 
 //database
-const connectDB = require('./config/db');
+const connectDB = require('../config/db');
 connectDB();
 
-const User = require('./models/User');
-const Token = require('./models/Token');
-const Load = require('./models/Load');
+const User = require('../models/User');
+const Token = require('../models/Token');
+const Load = require('../models/Load');
 
 app.use(express.json()); 
 
@@ -22,6 +22,10 @@ function generateToken() {
 function hashPassword(password){
     return crypto.createHash('sha256').update(password).digest('hex');
 }
+
+app.get('/', (req, res) => {
+    res.send("hello eleos");
+});
 
 //authentication 
 //Expose an authentication endpoint that takes in a POST request with a username and passowrd and returns a user object 
@@ -114,6 +118,4 @@ app.get('/loads', async (req, res) => {
 }); 
 
 
-app.listen(port, () => {
-    console.log(`Server is running on port http://localhost:${port}`);
-});
+module.exports.handler = serverless(app);
