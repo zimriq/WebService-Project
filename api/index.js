@@ -6,12 +6,12 @@ const app = express();
 
 
 //database
-const connectDB = require('./config/db');
-connectDB();
+const connectDB = require('../config/db');
 
-const User = require('./models/User');
-const Token = require('./models/Token');
-const Load = require('./models/Load');
+connectDB();
+const User = require('../models/User');
+const Token = require('../models/Token');
+const Load = require('../models/Load');
 
 app.use(express.json()); 
 
