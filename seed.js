@@ -12,7 +12,7 @@ function hashPassword(password){
 }
 
 async function seed(){
-    //use to reset / add data to database
+// TEMPLATE FOR SEEDING DATA
 }
 
-seed();
+//seed();

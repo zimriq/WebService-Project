@@ -102,19 +102,14 @@ app.get('/loads', async (req, res) => {
         
         const user = await User.findById(api_token.userId).sort({ sort: 1 });
 
-        res.json({
-            id: load._id,
-            display_identifier: load.display_identifier,
-            sort: load.sort,
-            order_number: load.order_number,
-            load_status: load.load_status,
-            load_status_label: load.load_status_label,
-            active: load.active, 
-            current: load.current
-        });
+        const loads = await Load.find({userId: user._id}).sort({ sort: 1 });
+
+        res.json(loads);
     }
     catch(error){
         res.status(400).json({error: 'Bad Request'});
+        //debug
+        console.error(error);
     }
 }); 
 
