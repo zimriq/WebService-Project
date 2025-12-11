@@ -9,6 +9,7 @@ const Token = require('./models/Token');
 const Load = require('./models/Load');
 
 app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
 
 //helper functs
 function generateToken() {
@@ -43,10 +44,12 @@ app.get('/', (req, res) => {
     res.send("hello eleos");
 });
 
+app.use(verifyingPlatformKey);
+
 //authentication 
 //Expose an authentication endpoint that takes in a POST request with a username and passowrd and returns a user object 
 //  or an unauthorized response if username/password is invalid
-app.post('/authenticate', verifyingPlatformKey, async (req, res) => {
+app.post('/authenticate', async (req, res) => {
     try{
         const clientIp = req.headers['x-forwarded-for'];
 
@@ -78,7 +81,7 @@ app.post('/authenticate', verifyingPlatformKey, async (req, res) => {
 
 //Expose an authentication API endpoint that takes in a GET request that passes an API token returned from above POST 
 //  request and then also returns a user object (or an uhthorized response if token is invalid)
-app.get('/authenticate/:token', verifyingPlatformKey, async (req, res) => {
+app.get('/authenticate/:token', async (req, res) => {
     try{
         const clientIp = req.headers['x-forwarded-for'];
 
@@ -107,7 +110,7 @@ app.get('/authenticate/:token', verifyingPlatformKey, async (req, res) => {
 //loads 
 //Expose a loads API endpoint that takes in an api_token to authenticate/associate which user
 // and returns loads for that user
-app.get('/loads', verifyingPlatformKey, async (req, res) => {
+app.get('/loads', async (req, res) => {
     try{
         const authorization = req.headers['authorization'];
         if(!authorization){
