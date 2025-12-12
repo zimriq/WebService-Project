@@ -125,7 +125,7 @@ app.get('/loads', async (req, res) => {
             return res.status(401).json({error: 'Unauthorized due to invalid or expired token and/or API key'});
         }
         
-        const user = await User.findById(api_token.userId).sort({ sort: 1 });
+        const user = await User.findById(api_token.userId);
 
         const loads = await Load.find({userId: user._id}).sort({ sort: 1 });
 
