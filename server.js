@@ -71,7 +71,9 @@ app.post('/authenticate', async (req, res) => {
 
         res.json({
             full_name: user.username,
-            api_token: token 
+            api_token: token, 
+            ["dashboard"]: user["dashboard_code"], 
+            ["menu"]: user["menu_code"]
         });
     }
     catch(error){
@@ -99,7 +101,9 @@ app.get('/authenticate/:token', async (req, res) => {
         
         res.json({
             full_name: user.full_name, 
-            api_token: token
+            api_token: token,
+            ["dashboard"]: user["dashboard_code"],
+            ["menu"]: user["menu_code"]
         });
     }
     catch(error){
