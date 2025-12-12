@@ -73,7 +73,7 @@ app.post('/authenticate', async (req, res) => {
             full_name: user.full_name,
             api_token: token, 
             menu_code: user.menu_code,
-            dasboard_code: user.dashboard_code
+            dashboard_code: user.dashboard_code
         });
     }
     catch(error){
