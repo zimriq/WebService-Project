@@ -12,4 +12,13 @@ const loadSchema = new mongoose.Schema({
     current: Boolean,
 });
 
+loadSchema.set('toJSON'), {
+    transform: function(doc, ret) {
+        ret.id = ret._id; 
+        ret.userId = ret.userId; 
+        delete ret._id; 
+        delete ret.userId; 
+    }
+}
+
 module.exports = mongoose.model('Load', loadSchema);
