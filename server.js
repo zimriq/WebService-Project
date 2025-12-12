@@ -70,10 +70,10 @@ app.post('/authenticate', async (req, res) => {
         await Token.create({userId: user._id, token}); 
 
         res.json({
-            full_name: user.username,
+            full_name: user.full_name,
             api_token: token, 
-            ["dashboard"]: user["dashboard_code"], 
-            ["menu"]: user["menu_code"]
+            menu_code: user.menu_code,
+            dasboard_code: user.dashboard_code
         });
     }
     catch(error){
@@ -101,9 +101,7 @@ app.get('/authenticate/:token', async (req, res) => {
         
         res.json({
             full_name: user.full_name, 
-            api_token: token,
-            ["dashboard"]: user["dashboard_code"],
-            ["menu"]: user["menu_code"]
+            api_token: token
         });
     }
     catch(error){
@@ -135,8 +133,6 @@ app.get('/loads', async (req, res) => {
     }
     catch(error){
         res.status(400).json({error: 'Bad Request'});
-        //debug
-        console.error(error);
     }
 }); 
 
