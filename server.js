@@ -101,7 +101,9 @@ app.get('/authenticate/:token', async (req, res) => {
         
         res.json({
             full_name: user.full_name, 
-            api_token: token
+            api_token: token,
+            dashboard_code: user.dashboard_code,
+            menu_code: user.menu_code
         });
     }
     catch(error){
