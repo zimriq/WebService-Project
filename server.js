@@ -27,8 +27,6 @@ function verifyingPlatformKey(req, res, next){
     next();
 }
 
-console.log('Mongo URI:', process.env.MONGODB_URI);
-
 const connectDB = async () => {
     try{
         await mongoose.connect(process.env.MONGODB_URI);
